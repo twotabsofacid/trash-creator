@@ -23,7 +23,6 @@ function shuffleArray(array) {
 
 class TrashCreator {
 	constructor() {
-		console.log('hello world');
 		this.createGlitch();
 	}
 	createGlitch() {
