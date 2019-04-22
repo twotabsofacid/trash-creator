@@ -71,10 +71,9 @@ class TrashCreator {
 					}
 				});
 			}).then((val) => {
-				fs.writeFile('.tmp/out.jpg', val, (err) => {
+				fs.writeFile('/Users/seanmscanlan/Desktop/out.jpg', val, (err) => {
 					if (err) throw err;
-					this.nameImage();
-				})
+				});
 			});
 		});
 	}
@@ -88,7 +87,7 @@ class TrashCreator {
 			console.log('Predictions: ');
 			console.log(predictions);
 			const predictionsString = predictions.map(a => a.className.split(', ').join('_').split(' ').join('-')).join('_');
-			jetpack.copy('.tmp/out.jpg', `${CONFIG.desktop}${predictionsString}.jpg`);
+			jetpack.copy('.tmp/out.jpg', `${CONFIG.desktop}/${predictionsString}.jpg`);
 		}
 		run();
 	}
