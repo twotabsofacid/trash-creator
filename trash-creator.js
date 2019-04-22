@@ -39,7 +39,6 @@ class TrashCreator {
 		});
 		shuffleArray(images);
 		let bufferCreation = new Promise((resolve, reject) => {
-			console.log('we creating buffer');
 			images.forEach(image => {
 				fs.readFile(`.tmp/${image}`, (err, buf) => {
 					if (err) {
@@ -83,12 +82,17 @@ class TrashCreator {
 			ctx.drawImage(image, 0, 0, 1200, 1200);
 		});
 		async function run() {
-			const model = await mobilenet.load();
-			const predictions = await model.classify(canvas);
+			let model, predictions;
+			try {
+				model = await mobilenet.load();
+				predictions = await model.classify(canvas);
+			} catch(e) {
+				throw new Error(e);
+			}
 			console.log('Predictions: ');
 			console.log(predictions);
 			const predictionsString = predictions.map(a => a.className.split(', ').join('_').split(' ').join('-')).join('_');
-			jetpack.copy('.tmp/out.jpg', `${CONFIG.desktop}${predictionsString}.jpg`);
+			jetpack.copy('.tmp/out.jpg', `${CONFIG.desktop}/${predictionsString}.jpg`);
 		}
 		run();
 	}
