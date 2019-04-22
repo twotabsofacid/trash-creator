@@ -39,6 +39,7 @@ class TrashCreator {
 		});
 		shuffleArray(images);
 		let bufferCreation = new Promise((resolve, reject) => {
+			console.log('we creating buffer');
 			images.forEach(image => {
 				fs.readFile(`.tmp/${image}`, (err, buf) => {
 					if (err) {
@@ -60,7 +61,7 @@ class TrashCreator {
 					let ranSwitches = Math.floor(Math.random() * ranMultiplier);
 					for (let i = 0; i < ranSwitches; i++) {
 						let smallBuffSize = Math.min(outputBuffer.length, buf.length);
-						let reduced = Math.floor(smallBuffSize/20);
+						let reduced = Math.floor(smallBuffSize/40);
 						let ran = Math.floor(Math.random() * (smallBuffSize - reduced)) + reduced;
 						outputBuffer[ran] = buf[ran];
 					}
