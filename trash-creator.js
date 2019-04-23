@@ -89,10 +89,9 @@ class TrashCreator {
 			} catch(e) {
 				throw new Error(e);
 			}
-			console.log('Predictions: ');
-			console.log(predictions);
+			console.log('Predictions:', predictions);
 			const predictionsString = predictions.map(a => a.className.split(', ').join('_').split(' ').join('-')).join('_');
-			jetpack.copy('.tmp/out.jpg', `${CONFIG.desktop}/${predictionsString}.jpg`);
+			jetpack.copy('.tmp/out.jpg', `${CONFIG.desktop}/${predictionsString}.jpg`, { overwrite: true });
 		}
 		run();
 	}
