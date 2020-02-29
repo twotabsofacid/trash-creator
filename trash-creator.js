@@ -3,11 +3,6 @@
 const CONFIG = require('./config.json');
 const fs = require('fs');
 const jetpack = require('fs-jetpack');
-require('@tensorflow/tfjs-node-gpu');
-const mobilenet = require('@tensorflow-models/mobilenet');
-const { createCanvas, loadImage } = require('canvas');
-const canvas = createCanvas(1200, 1200);
-const ctx = canvas.getContext('2d');
 
 /**
  * Helper array shuffle function
@@ -71,25 +66,11 @@ class TrashCreator {
 					}
 				});
 			}).then((val) => {
-				fs.writeFile('/Users/seanmscanlan/Desktop/out.jpg', val, (err) => {
+				fs.writeFile(`${CONFIG.desktop}/out.jpg`, val, (err) => {
 					if (err) throw err;
 				});
 			});
 		});
-	}
-	nameImage() {
-		loadImage('.tmp/out.jpg').then((image) => {
-			ctx.drawImage(image, 0, 0, 1200, 1200);
-		});
-		async function run() {
-			const model = await mobilenet.load();
-			const predictions = await model.classify(canvas);
-			console.log('Predictions: ');
-			console.log(predictions);
-			const predictionsString = predictions.map(a => a.className.split(', ').join('_').split(' ').join('-')).join('_');
-			jetpack.copy('.tmp/out.jpg', `${CONFIG.desktop}/${predictionsString}.jpg`);
-		}
-		run();
 	}
 }
 
